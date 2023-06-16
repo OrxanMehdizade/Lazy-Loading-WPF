@@ -1,0 +1,28 @@
+﻿<Window x:Class="Lazy_Loading_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lazy_Loading_WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Background="Tomato">
+
+        <ListView x:Name="ListViewBooksCount" Height="370" VerticalAlignment="Bottom" ItemsSource="{Binding GetBooks}" Background="Tomato">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Header="BookName"  Width="280" DisplayMemberBinding="{Binding Name}"  />
+                    <GridViewColumn Header="BookPages" Width="240" DisplayMemberBinding="{Binding Pages}" />
+                    <GridViewColumn Header="BookPress" Width="240" DisplayMemberBinding="{Binding YearPress}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ComboBox x:Name="ComboClass" HorizontalAlignment="Left" Margin="10,10,0,0" SelectionChanged="ComboClass_SelectionChanged"  VerticalAlignment="Top" Width="220" Height="30" >
+            <ComboBox.ToolTip>ComboClass</ComboBox.ToolTip>
+        </ComboBox>
+        <TextBlock Width="195" TextAlignment="Center"  Height="50" VerticalAlignment="Top" Foreground="White" FontSize="15">Authors, Themes, Categories</TextBlock>
+        <ComboBox x:Name="ComboColumns" HorizontalAlignment="Left" Margin="567,10,0,0" SelectionChanged="ComboColumns_SelectionChanged" VerticalAlignment="Top" Width="220" Height="30">
+            <ComboBox.ToolTip>ComboColumns</ComboBox.ToolTip>
+        </ComboBox>
+    </Grid>
+</Window>
