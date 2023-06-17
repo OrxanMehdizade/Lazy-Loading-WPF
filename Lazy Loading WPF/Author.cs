@@ -12,4 +12,6 @@ public partial class Author
     public string LastName { get; set; } = null!;
 
     public virtual ICollection<Book> Books { get; set; } = new List<Book>();
+
+    public override string ToString() => $"{Id} - {FirstName} - {LastName}";
 }

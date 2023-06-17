@@ -24,6 +24,7 @@ namespace Lazy_Loading_WPF
     {
         public ObservableCollection<Book> GetBooks { get; } = new ObservableCollection<Book>();
 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -48,13 +49,14 @@ namespace Lazy_Loading_WPF
             }
         }
 
+
         private void ComboClass_SelectionChanged(object sender, RoutedEventArgs e)
         {
             using (var database = new LibraryContext())
             {
                 if (ComboClass.SelectedItem is ComboBoxItem selectedItem)
                 {
-                    string selectedTable = selectedItem.Content.ToString();
+                    string selectedTable = selectedItem.Content.ToString()!;
 
                     ComboColumns.Items.Clear();
 
@@ -79,34 +81,35 @@ namespace Lazy_Loading_WPF
 
         private void ComboColumns_SelectionChanged(object sender, RoutedEventArgs e)
         {
+
             using (var database = new LibraryContext())
             {
                 if (ComboClass.SelectedItem is ComboBoxItem selectedItem)
                 {
-                    string selectedTable = selectedItem.Content.ToString();
+                    string selectedTable = selectedItem.Content.ToString()!;
                     GetBooks.Clear();
 
                     if (selectedTable == "Authors" && ComboColumns.SelectedItem is string author)
                     {
                         var authorBooks = database.Books
-                            .Include(b => b.Authors)
-                            .Where(b => $"{b.Authors.FirstName} {b.Author.LastName}" == author)
+                            .Include(b => b.IdAuthorNavigation).ToList()
+                            .Where(b => $"{b.IdAuthorNavigation.FirstName} {b.IdAuthorNavigation.LastName}" == author)
                             .ToList();
                         authorBooks.ForEach(s => GetBooks.Add(s));
                     }
                     else if (selectedTable == "Themes" && ComboColumns.SelectedItem is string theme)
                     {
                         var themeBooks = database.Books
-                            .Include(b => b.Theme)
-                            .Where(b => $"{b.Theme.Name}" == theme)
+                            .Include(b => b.IdThemesNavigation).ToList()
+                            .Where(b => $"{b.IdThemesNavigation.Name}" == theme)
                             .ToList();
                         themeBooks.ForEach(s => GetBooks.Add(s));
                     }
                     else if (selectedTable == "Categories" && ComboColumns.SelectedItem is string category)
                     {
                         var categoryBooks = database.Books
-                            .Include(b => b.Category)
-                            .Where(b => $"{b.Category.Name}" == category)
+                            .Include(b => b.IdCategoryNavigation).ToList()
+                            .Where(b => $"{b.IdCategoryNavigation.Name}" == category)
                             .ToList();
                         categoryBooks.ForEach(s => GetBooks.Add(s));
                     }
